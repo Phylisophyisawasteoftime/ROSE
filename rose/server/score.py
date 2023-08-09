@@ -40,11 +40,9 @@ def process(players, track):
         if config.boost_flag and config.boost_count <= 3:
             player.score += config.score_move_forward
             config.boost_count += 1
-            print("boosted")
         elif config.boost_count >= 3:
             config.boost_count = 1
             config.boost_flag = False
-            print("boost over")
         obstacle = track.get(player.x, player.y)
         if obstacle == obstacles.CRACK:
             if player.action != actions.JUMP:
@@ -75,8 +73,9 @@ def process(players, track):
             if player.action == actions.PICKUP:
                 track.clear(player.x, player.y)
                 config.boost_flag = True
-                print(config.boost_flag)
-                print("obs booster")
+        elif obstacle == obstacles.PENGUIN_B:
+            if player.action == actions.PICKUP:
+                player.score += config.score_move_forward * 2
 
 
 
