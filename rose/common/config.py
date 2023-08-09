@@ -34,7 +34,8 @@ res_root = os.path.join(install_dir, "../res")
 
 max_players = 2
 cells_per_player = matrix_width // max_players
-
+boost_count = 1
+boost_flag = False
 # Score Points
 
 score_move_forward = 10

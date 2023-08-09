@@ -7,4 +7,4 @@ driver_name = "No Driver"
 
 
 def drive(world):
-    return actions.NONE
+    return actions.PICKUP

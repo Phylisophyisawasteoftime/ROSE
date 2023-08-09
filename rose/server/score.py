@@ -16,6 +16,7 @@ def process(players, track):
     track: track.Track object
     """
 
+
     # First handle right and left actions, since they may change in_lane
     # status, used for resolving collisions.
 
@@ -35,6 +36,15 @@ def process(players, track):
 
     for player in sorted_players:
         player.score += config.score_move_forward
+        print(config.boost_flag, config.boost_count <=3 )
+        if config.boost_flag and config.boost_count <= 3:
+            player.score += config.score_move_forward
+            config.boost_count += 1
+            print("boosted")
+        elif config.boost_count >= 3:
+            config.boost_count = 1
+            config.boost_flag = False
+            print("boost over")
         obstacle = track.get(player.x, player.y)
         if obstacle == obstacles.CRACK:
             if player.action != actions.JUMP:
@@ -64,7 +74,9 @@ def process(players, track):
         elif obstacle == obstacles.BOOSTER:
             if player.action == actions.PICKUP:
                 track.clear(player.x, player.y)
-                player.score += config.score_move_forward * 2
+                config.boost_flag = True
+                print(config.boost_flag)
+                print("obs booster")
 
 
 
