@@ -36,13 +36,13 @@ def process(players, track):
 
     for player in sorted_players:
         player.score += config.score_move_forward
-        print(config.boost_flag, config.boost_count <=3 )
-        if config.boost_flag and config.boost_count <= 3:
-            player.score += config.score_move_forward
-            config.boost_count += 1
-        elif config.boost_count >= 3:
-            config.boost_count = 1
-            config.boost_flag = False
+        print(player.boost_flag, player.boost_count <=3)
+        if player.boost_flag and player.boost_count <= 3:
+            player.score += player.score_move_forward
+            player.boost_count += 1
+        elif player.boost_count >= 3:
+            player.boost_count = 1
+            player.boost_flag = False
         obstacle = track.get(player.x, player.y)
         if obstacle == obstacles.CRACK:
             if player.action != actions.JUMP:
@@ -72,7 +72,7 @@ def process(players, track):
         elif obstacle == obstacles.BOOSTER:
             if player.action == actions.PICKUP:
                 track.clear(player.x, player.y)
-                config.boost_flag = True
+                player.boost_flag = True
         elif obstacle == obstacles.PENGUIN_B:
             if player.action == actions.PICKUP:
 
