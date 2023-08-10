@@ -75,7 +75,13 @@ def process(players, track):
                 config.boost_flag = True
         elif obstacle == obstacles.PENGUIN_B:
             if player.action == actions.PICKUP:
-                player.score += config.score_move_forward * 2
+
+                matrix = [[player.x-1, player.y-1],[player.x-1, player.y-2],[player.x-1, player.y-3],
+                          [player.x, player.y-1],[player.x, player.y-2],[player.x, player.y-3],
+                          [player.x+1, player.y-1],[player.x+1, player.y-2],[player.x+1, player.y-3]]
+                for row in matrix:
+                    track.set(row[0], row[1], obstacles.PENGUIN)
+                track.clear(player.x, player.y)
 
 
 
