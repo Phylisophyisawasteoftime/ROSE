@@ -16,6 +16,7 @@ def process(players, track):
     track: track.Track object
     """
 
+
     # First handle right and left actions, since they may change in_lane
     # status, used for resolving collisions.
 
@@ -35,6 +36,13 @@ def process(players, track):
 
     for player in sorted_players:
         player.score += config.score_move_forward
+        print(player.boost_flag, player.boost_count <=3)
+        if player.boost_flag and player.boost_count <= 3:
+            player.score += player.score_move_forward
+            player.boost_count += 1
+        elif player.boost_count >= 3:
+            player.boost_count = 1
+            player.boost_flag = False
         obstacle = track.get(player.x, player.y)
         if obstacle == obstacles.CRACK:
             if player.action != actions.JUMP:
@@ -61,6 +69,21 @@ def process(players, track):
             if player.action == actions.PICKUP:
                 track.clear(player.x, player.y)
                 player.score += config.score_move_forward
+        elif obstacle == obstacles.BOOSTER:
+            if player.action == actions.PICKUP:
+                track.clear(player.x, player.y)
+                player.boost_flag = True
+        elif obstacle == obstacles.PENGUIN_B:
+            if player.action == actions.PICKUP:
+
+                matrix = [[player.x-1, player.y-1],[player.x-1, player.y-2],[player.x-1, player.y-3],
+                          [player.x, player.y-1],[player.x, player.y-2],[player.x, player.y-3],
+                          [player.x+1, player.y-1],[player.x+1, player.y-2],[player.x+1, player.y-3]]
+                for row in matrix:
+                    track.set(row[0], row[1], obstacles.PENGUIN)
+                track.clear(player.x, player.y)
+
+
 
         # Here we can end the game when player gets out of
         # the track bounds. For now, just keep the player at the same

@@ -13,8 +13,8 @@ class Player(object):
         self.response_time = None
         self.score = None
         self.reset()
-
-    # Game state interface
+        self.boost_flag = False
+        self.boost_count = 1
 
     def update(self):
         """ Go to the next game state """
